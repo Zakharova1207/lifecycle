@@ -1,17 +1,22 @@
 package nagikh.dev;
 
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     static void main() {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        IO.println(String.format("Hello and welcome!"));
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            IO.println("i = " + i);
-        }
+        AppLogger logger1 = context.getBean(AppLogger.class);
+        AppLogger logger2 = context.getBean(AppLogger.class);
+        System.out.println("logger1 == logger2 ? " + (logger1 == logger2));
+
+        OperationContext ctx1 = context.getBean(OperationContext.class);
+        OperationContext ctx2 = context.getBean(OperationContext.class);
+        OperationContext ctx3 = context.getBean(OperationContext.class);
+        System.out.println("ctx1 == ctx2 ? " + (ctx1 == ctx2));
+
+        context.close();
     }
 }
